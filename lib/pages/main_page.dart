@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_from_scratch/pages/second_page.dart';
 
 class MainPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -10,8 +11,6 @@ class MainPage extends StatelessWidget {
       ),
       body: PageBody(), // Create function call here to populate body
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.red,
         onPressed: () {
           Navigator.of(context).push(
             new MaterialPageRoute<void>(
@@ -28,10 +27,47 @@ class MainPage extends StatelessWidget {
 }
 
 class PageBody extends StatelessWidget {
+
+  List<String> notes = new List();
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text("This is the new Body."),
-    );
+    _populateNotes();
+    return ListView.builder(
+        itemCount: notes.length,
+        itemBuilder: (context, index) {
+          return Container(
+            decoration: BoxDecoration(
+              border: Border.all(width: 2.0, color: Theme.of(context).dividerColor)
+            ),
+            child: ListTile(
+              title: Text('${notes[index]}'),
+              subtitle: Text("Some note body."),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text("23d"),
+                    Container(padding: EdgeInsets.all(5.0)),
+                    Icon(Icons.date_range)
+                  ]),
+              onTap: () {
+                Navigator.of(context).push(
+                  new MaterialPageRoute<void>(
+                    builder: (BuildContext context){
+                      return SecondPage();
+                    },
+                  ),
+                );
+              },
+            ),
+          );
+        },
+      );
+  }
+
+  void _populateNotes() {
+    for (var i = 0; i < 20; i++) {
+      notes.add("This is note $i");
+    }
   }
 }

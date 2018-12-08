@@ -9,10 +9,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "App From Scratch",
-      theme: ThemeData(
-        primaryColor: Colors.green,
-        accentColor: Colors.greenAccent
-      ),
+      theme: ThemeData.light(),
       home: MainPage(),
     );
   }
