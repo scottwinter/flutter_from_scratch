@@ -12,7 +12,7 @@ class AddNote extends StatelessWidget {
       body: PageBody(noteTitleController, noteBodyController), // Create function call here to populate body
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          SaveNoteData();
+          saveNoteData();
           Navigator.of(context).pop();
         },
         child: Icon(Icons.save),
@@ -20,9 +20,9 @@ class AddNote extends StatelessWidget {
     );
   }
 
-  void SaveNoteData() {
+  void saveNoteData() {
     String noteTitle = noteTitleController.text;
-    print("Note data: $noteTitle");
+    print("Note Title: $noteTitle");
   }
 }
 

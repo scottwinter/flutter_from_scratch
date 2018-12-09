@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_from_scratch/podo/note.dart';
 
 class EditNote extends StatelessWidget {
-  final myController = TextEditingController();
+  final noteTitleController = TextEditingController();
+  final noteBodyController = TextEditingController();
   final Note note;
   EditNote(this.note);
 
@@ -12,22 +13,31 @@ class EditNote extends StatelessWidget {
       appBar: new AppBar(
         title: Text("Edit Note"),
       ),
-      body: PageBody(note), // Create function call here to populate body
+      body: PageBody(note, noteTitleController, noteBodyController), // Create function call here to populate body
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          saveData();
           Navigator.of(context).pop();
         },
         child: Icon(Icons.save),
       ),
     );
   }
+
+  saveData() {
+    String title = noteTitleController.text;
+    String body = noteBodyController.text;
+    note.noteTitle = noteTitleController.text;
+    note.noteBody = noteBodyController.text;
+    print("Note Data:  Title: $title, Body: $body");
+  }
 }
 
 class PageBody extends StatelessWidget {
-  final noteTitleController = TextEditingController();
-  final noteBodyController = TextEditingController();
+  final noteTitleController;
+  final noteBodyController;
   final Note note;
-  PageBody(this.note);
+  PageBody(this.note, this.noteTitleController, this.noteBodyController);
 
   @override
   Widget build(BuildContext context) {
