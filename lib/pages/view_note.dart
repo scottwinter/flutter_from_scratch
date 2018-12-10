@@ -31,15 +31,39 @@ class ViewNote extends StatelessWidget {
 }
 
 class PageBody extends StatelessWidget {
+
+
   final Note note;
   PageBody(this.note);
+
+  TextEditingController noteTitleController = TextEditingController();
+  TextEditingController noteBodyController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    noteTitleController.text = note.noteTitle;
+    noteBodyController.text = note.noteBody;
     return Column(
-      children: [
-        Text(note.noteTitle),
-        Text(note.noteBody)
-    ]
+        children: [
+          TextField(
+            enabled: false,
+            controller: noteTitleController,
+            decoration: InputDecoration(
+                hintText: "Note Title"
+            ),
+          ),
+          TextField(
+            enabled: false,
+            maxLines: null,
+            keyboardType: TextInputType.multiline,
+            textAlign: TextAlign.left,
+            controller: noteBodyController,
+            decoration: InputDecoration(
+                hintText: "Note Title",
+                border: InputBorder.none
+            ),
+          ),
+        ]
     );
   }
 }

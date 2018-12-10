@@ -72,7 +72,7 @@ class PageBody extends StatelessWidget {
     for (var i = 0; i < 20; i++) {
       Note note = new Note();
       note.noteTitle = "This is note $i";
-      note.noteBody = "Some note body text for note number $i";
+      note.noteBody = "Some note body text for note number $i ...";
       note.noteUpdatedDate = "$i days";
       notes.add(note);
     }

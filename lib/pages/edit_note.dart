@@ -52,10 +52,13 @@ class PageBody extends StatelessWidget {
             ),
           ),
           TextField(
+            maxLines: null,
+            keyboardType: TextInputType.multiline,
             textAlign: TextAlign.left,
             controller: noteBodyController,
             decoration: InputDecoration(
-                hintText: "Note Title"
+                hintText: "Note Title",
+                border: InputBorder.none
             ),
           ),
         ]
