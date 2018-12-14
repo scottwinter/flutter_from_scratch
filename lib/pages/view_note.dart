@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_from_scratch/pages/edit_note.dart';
-import 'package:flutter_from_scratch/podo/note.dart';
+import 'package:flutter_from_scratch/model/note.dart';
 
 class ViewNote extends StatelessWidget {
   final Note note;
@@ -41,8 +41,8 @@ class PageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    noteTitleController.text = note.noteTitle;
-    noteBodyController.text = note.noteBody;
+    noteTitleController.text = note.title;
+    noteBodyController.text = note.body;
     return Column(
         children: [
           TextField(

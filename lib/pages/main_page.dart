@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_from_scratch/pages/view_note.dart';
 import 'package:flutter_from_scratch/pages/add_note.dart';
-import 'package:flutter_from_scratch/podo/note.dart';
+import 'package:flutter_from_scratch/model/note.dart';
+import 'package:flutter_from_scratch/repository/notes_repo.dart';
+import 'package:flutter_from_scratch/repository/database.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
+  @override
+  MainPageState createState() => new MainPageState();
+}
+
+class MainPageState extends State<MainPage> {
+  List<Note> notes = new List();
+  DatabaseHelper db = new DatabaseHelper();
+//  var db = new DatabaseHelper();
 
   @override
   Widget build(BuildContext context) {
@@ -11,70 +21,144 @@ class MainPage extends StatelessWidget {
       appBar: new AppBar(
         title: Text("Noted"),
       ),
-      body: PageBody(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(
-            new MaterialPageRoute<void>(
-              builder: (BuildContext context){
-                return AddNote();
-              },
-            ),
-          );
-        },
-        child: Icon(Icons.add),
-      ),
-    );
-  }
-}
-
-class PageBody extends StatelessWidget {
-
-  List<Note> notes = new List();
-
-  @override
-  Widget build(BuildContext context) {
-    _populateNotes();
-    return ListView.builder(
+      body: ListView.builder(
         itemCount: notes.length,
         itemBuilder: (context, index) {
           Note note = notes[index];
           return Container(
             decoration: BoxDecoration(
-              border: Border.all(width: 2.0, color: Theme.of(context).dividerColor)
-            ),
+                border: Border.all(
+                    width: 2.0, color: Theme.of(context).dividerColor)),
             child: ListTile(
-              title: Text('${note.noteTitle}'),
-              subtitle: Text("${note.noteBody}"),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text("${note.noteUpdatedDate}"),
-                    Container(padding: EdgeInsets.all(5.0)),
-                    Icon(Icons.date_range)
-                  ]),
-              onTap: () {
-                Navigator.of(context).push(
-                  new MaterialPageRoute<void>(
-                    builder: (BuildContext context){
-                      return ViewNote(note);
-                    },
-                  ),
-                );
-              },
+              title: Text('${note.title}'),
+              subtitle: Text("${note.body}"),
+              trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+                Text(_updatedDateDiff(note)),
+                Container(padding: EdgeInsets.all(5.0)),
+                Icon(Icons.date_range)
+              ]),
+              onTap: () => _viewNewNote(context, note),
+              onLongPress: () => _deleteNoteDialog(note, index),
             ),
           );
         },
-      );
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _createNewNote(context),
+        child: Icon(Icons.add),
+      ),
+    );
   }
 
-  void _populateNotes() {
-    for (var i = 0; i < 20; i++) {
-      Note note = new Note();
-      note.noteTitle = "This is note $i";
-      note.noteBody = "Some note body text for note number $i ...";
-      note.noteUpdatedDate = "$i days";
-      notes.add(note);
+  @override
+  void initState() {
+    super.initState();
+
+    db.getAllNotes().then((notes) {
+      setState(() {
+        notes.forEach((note) {
+          this.notes.add(Note.fromMap(note));
+        });
+      });
+    });
+  }
+
+  String _updatedDateDiff(Note note) {
+    String dateDiff;
+
+    int diff = new DateTime.now().millisecondsSinceEpoch - note.updatedDate;
+    int seconds = diff ~/ 1000;
+    int minutes = seconds ~/ 60;
+    int hours = minutes ~/ 60;
+    int days = hours ~/ 24;
+
+    if(seconds < 60){
+      dateDiff = seconds.toString() + " s";
+    } else if(minutes < 60) {
+      dateDiff = minutes.toString() + " m";
+    } else if(hours < 24) {
+      dateDiff = hours.toString() + " h";
+    } else {
+      dateDiff = days.toString() + " d";
     }
+    return dateDiff;
+  }
+
+  void _deleteNote(BuildContext context, Note note, int position) async {
+    await db.deleteNote(note.id).then((notes) {
+      setState(() {
+        this.notes.removeAt(position);
+      });
+    });
+  }
+
+  void _viewNewNote(BuildContext context, Note note) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ViewNote(note)),
+    );
+
+    db.getAllNotes().then((notes) {
+      setState(() {
+        this.notes.clear();
+        notes.forEach((note) {
+          this.notes.add(Note.fromMap(note));
+        });
+      });
+    });
+
+  }
+
+  void _createNewNote(BuildContext context) async {
+    String result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AddNote()),
+    );
+
+    if (result == 'save') {
+      db.getAllNotes().then((notes) {
+        setState(() {
+          this.notes.clear();
+          notes.forEach((note) {
+            this.notes.add(Note.fromMap(note));
+          });
+        });
+      });
+    }
+  }
+
+  Future<void> _deleteNoteDialog(Note note, int position) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete Note!'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Do you really want to delete this note?'),
+                Text('It will be gone forever.... Unless you write it again.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Yes'),
+              onPressed: () {
+                _deleteNote(context, note, position);
+                Navigator.pop(context, 'yes');
+              },
+            ),
+            FlatButton(
+              child: Text('No'),
+              onPressed: () {
+                Navigator.pop(context, 'no');
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
