@@ -4,6 +4,33 @@ import 'package:flutter_from_scratch/pages/add_note.dart';
 import 'package:flutter_from_scratch/model/note.dart';
 import 'package:flutter_from_scratch/repository/notes_repo.dart';
 import 'package:flutter_from_scratch/repository/database.dart';
+import 'package:splashscreen/splashscreen.dart';
+
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => new _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  Widget build(BuildContext context) {
+    return new SplashScreen(
+        seconds: 1,
+        navigateAfterSeconds: new MainPage(),
+        title: new Text('Welcome To Noted',
+          style: new TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20.0
+          ),),
+//        image: new Image.network('https://i.imgur.com/TyCSG9A.png'),
+        backgroundColor: Colors.white,
+        styleTextUnderTheLoader: new TextStyle(),
+        photoSize: 100.0,
+//        onClick: ()=>print("Flutter Egypt"),
+        loaderColor: Colors.blue
+    );
+  }
+}
 
 class MainPage extends StatefulWidget {
   @override

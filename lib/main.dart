@@ -10,7 +10,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       title: "App From Scratch",
       theme: ThemeData.light(),
-      home: MainPage(),
+      home: MyApp(),
     );
   }
 }
