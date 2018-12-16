@@ -9,6 +9,22 @@ class Note {
   Note.data(this.title, this.body, this.updatedDate);
   Note.allData(this.id, this.title, this.body, this.updatedDate);
 
+  String noteTitleForList() {
+    String listTitle = this.title.replaceAll("\n", " ");
+    if(listTitle.length >= 30){
+      listTitle = listTitle.substring(0, 30)+" ...";
+    }
+    return listTitle;
+  }
+
+  String noteBodyForList() {
+    String listBody = this.body.replaceAll("\n", " ");
+    if(listBody.length >= 85){
+      listBody = listBody.substring(0, 85)+" ...";
+    }
+    return listBody;
+  }
+
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
     if (id != null) {
