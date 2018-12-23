@@ -30,13 +30,16 @@ class AddNewNoteState extends State<AddNewNote> {
             child: Expanded(
               flex: 1,
               child: TextField(
+                scrollPadding: EdgeInsets.only(bottom: 10.0),
                 key: _formKey,
                 maxLines: null,
                 keyboardType: TextInputType.multiline,
                 textAlign: TextAlign.left,
                 controller: noteBodyController,
                 decoration: InputDecoration(
-                    hintText: "Note Body", border: InputBorder.none),
+                    contentPadding: EdgeInsets.only(bottom: 10.0, top: 5.0),
+                    hintText: "Note Body",
+                    border: InputBorder.none),
               ),
             ),
           ),
