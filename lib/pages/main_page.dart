@@ -16,18 +16,16 @@ class _MyAppState extends State<MyApp> {
     return new SplashScreen(
         seconds: 1,
         navigateAfterSeconds: new MainPage(),
-        title: new Text('Welcome To Noted',
-          style: new TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20.0
-          ),),
+        title: new Text(
+          'Welcome To Noted',
+          style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+        ),
 //        image: new Image.network('https://i.imgur.com/TyCSG9A.png'),
         backgroundColor: Colors.white,
         styleTextUnderTheLoader: new TextStyle(),
         photoSize: 100.0,
 //        onClick: ()=>print("Flutter Egypt"),
-        loaderColor: Colors.blue
-    );
+        loaderColor: Colors.blue);
   }
 }
 
@@ -54,10 +52,24 @@ class MainPageState extends State<MainPage> {
           return Container(
             decoration: BoxDecoration(
                 border: Border.all(
-                    width: 2.0, color: Theme.of(context).dividerColor)),
+                    width: 2.0,
+                    color: Theme.of(context).dividerColor),
+            ),
             child: ListTile(
-              title: Text('${note.title}'),
-              subtitle: Text("${note.body}"),
+              title: Padding(
+                  padding: EdgeInsets.only(top: 10.0, bottom: 8.0),
+                  child: Text(
+                    '${note.noteTitleForList()}',
+                    style: DefaultTextStyle.of(context)
+                        .style
+                        .apply(fontSizeFactor: 1.4),
+                  )),
+              subtitle: Padding(
+                  padding: EdgeInsets.only(bottom: 8.0),
+                  child: Text("${note.noteBodyForList()}",
+                    style: DefaultTextStyle.of(context)
+                        .style
+                        .apply(fontSizeFactor: 1.1),)),
               trailing: Row(mainAxisSize: MainAxisSize.min, children: [
                 Text(_updatedDateDiff(note)),
                 Container(padding: EdgeInsets.all(5.0)),
@@ -98,11 +110,11 @@ class MainPageState extends State<MainPage> {
     int hours = minutes ~/ 60;
     int days = hours ~/ 24;
 
-    if(seconds < 60){
+    if (seconds < 60) {
       dateDiff = seconds.toString() + " s";
-    } else if(minutes < 60) {
+    } else if (minutes < 60) {
       dateDiff = minutes.toString() + " m";
-    } else if(hours < 24) {
+    } else if (hours < 24) {
       dateDiff = hours.toString() + " h";
     } else {
       dateDiff = days.toString() + " d";
@@ -132,7 +144,6 @@ class MainPageState extends State<MainPage> {
         });
       });
     });
-
   }
 
   void _createNewNote(BuildContext context) async {
@@ -170,18 +181,20 @@ class MainPageState extends State<MainPage> {
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('Yes'),
+              child: Text('Yes', style: TextStyle(fontSize: 20.0),),
               onPressed: () {
                 _deleteNote(context, note, position);
                 Navigator.pop(context, 'yes');
               },
             ),
+            Container(width: 100, height: 20,),
             FlatButton(
-              child: Text('No'),
+              child: Text('No', style: TextStyle(fontSize: 20.0),),
               onPressed: () {
                 Navigator.pop(context, 'no');
               },
             ),
+            Container(width: 20, height: 20,),
           ],
         );
       },
