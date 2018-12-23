@@ -27,21 +27,17 @@ class AddNewNoteState extends State<AddNewNote> {
             decoration: InputDecoration(hintText: "Note Title"),
           ),
           Container(
-
             child: Expanded(
               flex: 1,
               child: TextField(
-                    key: _formKey,
-                    maxLines: null,
-                    keyboardType: TextInputType.multiline,
-                    textAlign: TextAlign.left,
-                    controller: noteBodyController,
-                    decoration: InputDecoration(
-                        hintText: "Note Body",
-                        border: InputBorder.none
-                    ),
-                  ),
-
+                key: _formKey,
+                maxLines: null,
+                keyboardType: TextInputType.multiline,
+                textAlign: TextAlign.left,
+                controller: noteBodyController,
+                decoration: InputDecoration(
+                    hintText: "Note Body", border: InputBorder.none),
+              ),
             ),
           ),
           Container(
@@ -51,10 +47,11 @@ class AddNewNoteState extends State<AddNewNote> {
       ), // Create function call here to populate body
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          db.saveNote(Note.data(
-              noteTitleController.text,
-              noteBodyController.text,
-              new DateTime.now().millisecondsSinceEpoch))
+          db
+              .saveNote(Note.data(
+                  noteTitleController.text,
+                  noteBodyController.text,
+                  new DateTime.now().millisecondsSinceEpoch))
               .then((_) {
             Navigator.pop(context, 'save');
           });
@@ -63,5 +60,4 @@ class AddNewNoteState extends State<AddNewNote> {
       ),
     );
   }
-
 }

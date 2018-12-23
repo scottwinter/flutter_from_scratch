@@ -4,7 +4,7 @@ import 'package:flutter_from_scratch/model/note.dart';
 import 'package:flutter_from_scratch/repository/database.dart';
 
 class EditNote extends StatelessWidget {
-  DatabaseHelper db = new DatabaseHelper();
+  final DatabaseHelper db = new DatabaseHelper();
   final noteTitleController = TextEditingController();
   final noteBodyController = TextEditingController();
   final Note note;
@@ -58,25 +58,25 @@ class PageBody extends StatelessWidget {
                 hintText: "Note Title"
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: Scrollbar(
-              child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
+          Container(
+            child: Expanded(
+              flex: 1,
               child: TextField(
-                autofocus: true,
-                maxLines: null,
-                keyboardType: TextInputType.multiline,
-                textAlign: TextAlign.left,
-                controller: noteBodyController,
-                decoration: InputDecoration(
-                    hintText: "Note Body",
-                    border: InputBorder.none
+                  autofocus: true,
+                  maxLines: null,
+                  keyboardType: TextInputType.multiline,
+                  textAlign: TextAlign.left,
+                  controller: noteBodyController,
+                  decoration: InputDecoration(
+                      hintText: "Note Body",
+                      border: InputBorder.none
+                  ),
                 ),
-              ),
-              ),
-            ),
+                ),
           ),
+          Container(
+            height: 20.0,
+          )
         ]
     );
   }
