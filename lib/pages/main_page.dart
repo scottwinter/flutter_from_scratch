@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_from_scratch/pages/view_note.dart';
-import 'package:flutter_from_scratch/pages/add_note.dart';
 import 'package:flutter_from_scratch/model/note.dart';
-import 'package:flutter_from_scratch/repository/notes_repo.dart';
+import 'package:flutter_from_scratch/pages/add_new_note.dart';
+import 'package:flutter_from_scratch/pages/view_note.dart';
 import 'package:flutter_from_scratch/repository/database.dart';
 import 'package:splashscreen/splashscreen.dart';
 
@@ -139,7 +138,7 @@ class MainPageState extends State<MainPage> {
   void _createNewNote(BuildContext context) async {
     String result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AddNote()),
+      MaterialPageRoute(builder: (context) => AddNewNote()),
     );
 
     if (result == 'save') {
