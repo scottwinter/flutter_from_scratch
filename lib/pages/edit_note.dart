@@ -53,7 +53,7 @@ class EditNoteState extends State<EditNote> {
             ),
           ),
           Container(
-            height: 20.0,
+            height: 30.0,
           )
         ]),
       ),
@@ -68,14 +68,21 @@ class EditNoteState extends State<EditNote> {
   }
 
   saveData() {
-    db.updateNote(Note.fromMap({
-      'id': note.id,
-      'title': noteTitleController.text,
-      'body': noteBodyController.text,
-      'updatedDate': new DateTime.now().millisecondsSinceEpoch
-    }));
+    String title = noteTitleController.text;
+    String body = noteBodyController.text;
+    if(title.isNotEmpty || body.isNotEmpty) {
+      print("------- Inside save!");
+      db.updateNote(Note.fromMap({
+        'id': note.id,
+        'title': noteTitleController.text,
+        'body': noteBodyController.text,
+        'updatedDate': new DateTime.now().millisecondsSinceEpoch
+      }));
 
-    note.title = noteTitleController.text;
-    note.body = noteBodyController.text;
+      note.title = noteTitleController.text;
+      note.body = noteBodyController.text;
+    } else {
+      //TODO prompt user to delete the note and return to main screen if yes
+    }
   }
 }

@@ -48,12 +48,7 @@ class AddNewNoteState extends State<AddNewNote> {
       ), // Create function call here to populate body
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          db
-              .saveNote(Note.data(
-                  noteTitleController.text,
-                  noteBodyController.text,
-                  new DateTime.now().millisecondsSinceEpoch))
-              .then((_) {
+          _saveNote().then((_) {
             Navigator.pop(context, 'save');
           });
         },
@@ -61,4 +56,18 @@ class AddNewNoteState extends State<AddNewNote> {
       ),
     );
   }
+
+  Future<int> _saveNote() {
+    String title = noteTitleController.text;
+    String body = noteBodyController.text;
+    if(title.isNotEmpty || body.isNotEmpty) {
+     return db
+          .saveNote(Note.data(
+          title, body,
+          new DateTime.now().millisecondsSinceEpoch));
+    } else {
+      return db.getCount();
+    }
+  }
+
 }
