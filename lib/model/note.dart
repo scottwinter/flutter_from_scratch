@@ -19,8 +19,8 @@ class Note {
 
   String noteBodyForList() {
     String listBody = this.body.replaceAll("\n", " ");
-    if(listBody.length >= 85){
-      listBody = listBody.substring(0, 85)+" ...";
+    if(listBody.length >= 120){
+      listBody = listBody.substring(0, 120)+" ...";
     }
     return listBody;
   }

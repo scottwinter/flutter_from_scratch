@@ -31,31 +31,30 @@ class EditNoteState extends State<EditNote> {
         title: Text("Edit Note"),
       ),
       body: Container(
+        padding: EdgeInsets.only(left: 10.0, right: 10.0),
         child: Column(children: [
           TextField(
             controller: noteTitleController,
             decoration: InputDecoration(hintText: "Note Title"),
           ),
-         Expanded(
-              flex: 1,
-              child: TextField(
-//                scrollPadding: EdgeInsets.only(bottom: 10.0),
-                key: _formKey,
-                autofocus: true,
-                maxLines: null,
-                keyboardType: TextInputType.multiline,
-                textAlign: TextAlign.left,
-                controller: noteBodyController,
-                decoration: InputDecoration(
-//                    contentPadding: EdgeInsets.only(bottom: 10.0, top: 5.0),
-                    hintText: "Note Body",
-                    border: InputBorder.none),
-              ),
+          Expanded(
+            flex: 1,
+            child: TextField(
+              key: _formKey,
+              autofocus: true,
+              maxLines: null,
+              keyboardType: TextInputType.multiline,
+              textAlign: TextAlign.left,
+              controller: noteBodyController,
+              decoration: InputDecoration(
+                  contentPadding: EdgeInsets.only(bottom: 10.0, top: 12.0),
+                  hintText: "Note Body",
+                  border: InputBorder.none),
             ),
-
-//          Container(
-//            height: 20.0,
-//          )
+          ),
+          Container(
+            height: 20.0,
+          )
         ]),
       ),
       floatingActionButton: FloatingActionButton(

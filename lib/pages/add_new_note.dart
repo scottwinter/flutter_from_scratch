@@ -20,27 +20,25 @@ class AddNewNoteState extends State<AddNewNote> {
         title: Text("Add New Note NEW"),
       ),
       body: Container(
+        padding: EdgeInsets.only(left: 10.0, right: 10.0),
         child: Column(children: [
           TextField(
             autofocus: true,
             controller: noteTitleController,
             decoration: InputDecoration(hintText: "Note Title"),
           ),
-          Container(
-            child: Expanded(
-              flex: 1,
-              child: TextField(
-                scrollPadding: EdgeInsets.only(bottom: 10.0),
-                key: _formKey,
-                maxLines: null,
-                keyboardType: TextInputType.multiline,
-                textAlign: TextAlign.left,
-                controller: noteBodyController,
-                decoration: InputDecoration(
-                    contentPadding: EdgeInsets.only(bottom: 10.0, top: 5.0),
-                    hintText: "Note Body",
-                    border: InputBorder.none),
-              ),
+          Expanded(
+            flex: 1,
+            child: TextField(
+              key: _formKey,
+              maxLines: null,
+              keyboardType: TextInputType.multiline,
+              textAlign: TextAlign.left,
+              controller: noteBodyController,
+              decoration: InputDecoration(
+                  contentPadding: EdgeInsets.only(bottom: 10.0, top: 12.0),
+                  hintText: "Note Body",
+                  border: InputBorder.none),
             ),
           ),
           Container(

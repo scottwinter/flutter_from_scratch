@@ -43,27 +43,32 @@ class PageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     noteTitleController.text = note.title;
     noteBodyController.text = note.body;
-    return Column(
-        children: [
-          TextField(
-            enabled: false,
-            controller: noteTitleController,
-            decoration: InputDecoration(
-                hintText: "Note Title"
+    return Container(
+      padding: EdgeInsets.only(left: 10.0, right: 10.0),
+      child: Column(
+          children: [
+            TextField(
+              enabled: false,
+              controller: noteTitleController,
+              decoration: InputDecoration(
+                  hintText: "Note Title"
+              ),
             ),
-          ),
-          TextField(
-            enabled: false,
-            maxLines: null,
-            keyboardType: TextInputType.multiline,
-            textAlign: TextAlign.left,
-            controller: noteBodyController,
-            decoration: InputDecoration(
-                hintText: "Note Title",
-                border: InputBorder.none
+            Expanded(
+              child: TextField(
+                enabled: false,
+                maxLines: null,
+                keyboardType: TextInputType.multiline,
+                textAlign: TextAlign.left,
+                controller: noteBodyController,
+                decoration: InputDecoration(
+                    hintText: "Note Title",
+                    border: InputBorder.none
+                ),
+              ),
             ),
-          ),
-        ]
+          ]
+      ),
     );
   }
 }
